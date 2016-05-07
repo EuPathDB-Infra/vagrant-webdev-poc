@@ -1,20 +1,3 @@
-products = [
-  'ApiDB',
-  'AmoebaDB',
-  'CryptoDB',
-  'EuPathDB',
-  'FungiDB',
-  'GiardiaDB',
-  'HostDB',
-  'MicrosporidiaDB',
-  'OrthoMCL',
-  'PiroplasmaDB',
-  'PlasmoDB',
-  'SchistoDB',
-  'ToxoDB',
-  'TrichDB',
-  'TriTrypDB',
-]
 Vagrant.configure(2) do |config|
 
   config.vm.box_url = 'http://software.apidb.org/vagrant/webdev.json'
@@ -29,17 +12,8 @@ Vagrant.configure(2) do |config|
 
   if Vagrant.has_plugin?('landrush')
     config.landrush.enabled = true
-    # Setting multiple TLD values requires my Landrush
-    # fork at https://github.com/mheiges/landrush.git
-    # (A pull request for the patch as been sent to the upstream landrush maintainer.)
-    config.landrush.tld = products.map{ |tld| "vm.#{tld.downcase}.org" }
-    config.landrush.tld.each do |tld|
-      config.landrush.host "sa.#{tld}"
-    end
+    config.landrush.tld = 'vm.trichdb.org'
+    config.landrush.host "sa.vm.trichdb.org"
   end
-
-#   config.vm.provision :ansible do |ansible|
-#     ansible.playbook = "playbook.yml"
-#   end
 
 end
