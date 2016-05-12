@@ -121,9 +121,12 @@ and installing your website with a matching hostname, e.g. `sa.vm.toxodb.org`. (
 With this setup, pointing your browser at http://sa.vm.toxodb.org/ will show you the virtual machine, http://toxodb.org/ will take you to the live production website.
 
 
-Known Issues
+Tips
 ------------
 
 Put `$PROJECT_HOME` on an NFS share somehow so it can be edited with host IDE. (I manually make a `project_home` directory on `/vagrant/scratch` and symlink it in `/var/www/sa.vm.toxodb.org/`. There are many other options to explore.
 
-Many other things to be discovered.
+Known Issues
+------------
+
+TBD
