@@ -93,7 +93,7 @@ Likewise, shutdown and disable an instance you no longer need with `instance_man
 Run sshuttle
 -----------------
 
-If you want access databases hosted on campus you will need to tunnel through firewalls. Sshuttle is a useful utility for that. You can run it on your host if you have OS X, otherwise use the copy installed on the virtual machine.
+If you are off campus and want access databases hosted on campus you will need to tunnel through firewalls. Sshuttle is a useful utility for that. You can run it on your host if you have OS X, otherwise use the copy installed on the virtual machine.
 
 The `sshutle` on the virtual machine is managed from the command line.
 
