@@ -8,6 +8,9 @@ The Vagrant box has been provisioned using a subset of the same pipelines used t
 Prerequisites
 =====
 
+
+The vagrant box is downloaded from a restricted EuPathDB server. You will need to be on campus for the initial box download to be allowed through the server firewall. (Downloads happen the first time you run `vagrant up` or whenever you run `vagrant box update`). Once the box is cached on your host, you can work off-campus.
+
 Vagrant
 ---------------
 
@@ -87,6 +90,20 @@ Likewise, shutdown and disable an instance you no longer need with `instance_man
 
     sudo instance_manager disable AmoebaDB
 
+Run sshuttle
+-----------------
+
+If you want access databases hosted on campus you will need to tunnel through firewalls. Sshuttle is a useful utility for that. You can run it on your host if you have OS X, otherwise use the copy installed on the virtual machine.
+
+The `sshutle` on the virtual machine is managed from the command line.
+
+    sshuttle -r joe@host.upenn.edu 10.12.33.0/24 10.11.60.0/24 > /dev/null 2>&1 &
+
+Substitute `joe@host.upenn.edu` with your username and your preferred tunnel endpoint. For best performance, pick an endpoint that is close to the database. The `10.12.33.0/24 10.11.60.0/24` specify which subnet destinations will be tunneled. Substitute these values with appropriate subnets for our datacenters.
+
+Adjust the command arguments as desired. This example squashes logging and puts the process into the background; change that if you need to see stderr/stdout for troubleshooting.
+
+See [sshuttle documentation](http://sshuttle.readthedocs.io/en/stable/) for details.
 
 Install a Website
 -----------------
