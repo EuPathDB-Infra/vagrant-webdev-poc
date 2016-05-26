@@ -11,10 +11,11 @@ Prerequisites
 
 The vagrant box is downloaded from a restricted EuPathDB server. You will need to be on campus for the initial box download to be allowed through the server firewall. (Downloads happen the first time you run `vagrant up` or whenever you run `vagrant box update`). Once the box is cached on your host, you can work off-campus.
 
+
 Vagrant
 ---------------
 
-Vagrant manages the lifecycle of the virtual machine, guided by the instructions in the `Vagrantfile` included with this project.
+Vagrant manages the lifecycle of the virtual machine, following by the instructions in the `Vagrantfile` that is included with this project.
 
 [https://www.vagrantup.com/downloads.html](https://www.vagrantup.com/downloads.html)
 
@@ -41,18 +42,24 @@ You should refer to Ansible documentation and related online forums for informat
 Vagrant Landrush Plugin (Optional)
 --------------------------------------
 
-The [Landrush](https://github.com/phinze/landrush) plugin for Vagrant provides a local DNS so you can register guest hostnames and refer to them in the host browser. It is not strictly required but it makes life easier than editing `/etc/hosts` files. This plugin has maximum benefit for OS X hosts, some benefit for Linux hosts and no benefit for Windows. Windows hosts will need to edit `hosts` files.
+The [Landrush](https://github.com/phinze/landrush) plugin for Vagrant
+provides a local DNS so you can register guest hostnames and refer to
+them in the host browser. It is not strictly required but it makes life
+easier than editing `/etc/hosts` files. This plugin has maximum benefit
+for OS X hosts, some benefit for Linux hosts and no benefit for Windows.
+Windows hosts will need to edit the `hosts` file.
 
-    vagrant plugin install landrush
-
-_If you have trouble getting the host to resolve guest hostnames through landrush try clearing the host DNS cache by running_ `sudo killall -HUP mDNSResponder`.
-
-If you want to host multiple product sites - say, sa.vm.toxodb.org and sa.vm.giardiadb.org - you may want our Landrush fork that supports multiple TLD management. Until and unless our [Pull Request](https://github.com/phinze/landrush/pull/125) is accepted by the upstream maintainer you will have to manually build and install the plugin from source.
+We use a custom fork of Landrush. In an OS X terminal, run the
+following.
 
     git clone https://github.com/mheiges/landrush.git
     cd landrush
     rake build
     vagrant plugin install pkg/landrush-0.18.0.gem
+
+_If you have trouble getting the host to resolve guest hostnames through landrush try clearing the host DNS cache by running_
+
+`sudo killall -HUP mDNSResponder`.
 
 You should refer to Landrush and Vagrant documentation and related online forums for information not covered in this document.
 
@@ -62,7 +69,7 @@ Usage
 Clone This Vagrant Project
 --------------------------
 
-    clone https://github.com/mheiges/vagrant-webdev-poc.git
+    git clone https://github.com/mheiges/vagrant-webdev-poc.git
 
 Start the Virtual Machine
 -------------------------
