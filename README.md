@@ -73,7 +73,9 @@ Using either Git or Subversion,
 
     git clone https://github.com/mheiges/vagrant-webdev-poc.git
 
-    svn export https://github.com/mheiges/vagrant-webdev-poc.git vagrant-webdev-poc
+or
+
+    svn co https://github.com/mheiges/vagrant-webdev-poc.git vagrant-webdev-poc
 
 Start the Virtual Machine
 -------------------------
