@@ -66,10 +66,14 @@ You should refer to Landrush and Vagrant documentation and related online forums
 Usage
 =======
 
-Clone This Vagrant Project
+Obtain a Local Copy of This Vagrant Project
 --------------------------
 
+Using either Git or Subversion,
+
     git clone https://github.com/mheiges/vagrant-webdev-poc.git
+
+    svn export https://github.com/mheiges/vagrant-webdev-poc.git vagrant-webdev-poc
 
 Start the Virtual Machine
 -------------------------
