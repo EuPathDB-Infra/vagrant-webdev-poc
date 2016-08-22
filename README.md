@@ -110,7 +110,7 @@ If you are off campus and want access databases hosted on campus you will need t
 
 The `sshutle` on the virtual machine is managed from the command line.
 
-    sshuttle -r joe@host.upenn.edu 10.12.33.0/24 10.11.60.0/24 > /dev/null 2>&1 &
+    sshuttle -e 'ssh -o StrictHostKeyChecking=no' -r joe@host.upenn.edu 10.12.33.0/24 10.11.60.0/24 > /dev/null 2>&1 &
 
 Substitute `joe@host.upenn.edu` with your username and your preferred tunnel endpoint. For best performance, pick an endpoint that is close to the database. The `10.12.33.0/24 10.11.60.0/24` specify which subnet destinations will be tunneled. Substitute these values with appropriate subnets for our datacenters.
 
