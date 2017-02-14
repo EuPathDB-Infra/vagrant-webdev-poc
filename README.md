@@ -49,8 +49,14 @@ easier than editing `/etc/hosts` files. This plugin has maximum benefit
 for OS X hosts, some benefit for Linux hosts and no benefit for Windows.
 Windows hosts will need to edit the `hosts` file.
 
-We use a custom fork of Landrush. In an OS X terminal, run the
-following.
+
+
+We use a custom fork of Landrush.  The gem file included with this project can be installed by running the following in an OS X terminal.
+
+    cd vagrant-webdev-poc
+    vagrant plugin install landrush-0.18.0.gem
+
+To manually build and install from source
 
     git clone https://github.com/mheiges/landrush.git
     cd landrush
