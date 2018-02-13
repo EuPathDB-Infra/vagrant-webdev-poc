@@ -153,9 +153,24 @@ Once logged in to the VM as the `vagrant` user, run
 
     installWdkSite
 
-and follow instructions. The hostname is preconfigured to be
-`webdev.vm.apidb.org` in the `Vagrantfile` so you can readily create a
-website with that hostname.
+and follow instructions to manage a property file. The hostname is
+preconfigured to be `webdev.vm.apidb.org` in the `Vagrantfile` so you
+can readily create a website with that hostname.
+
+Typical EBRC Tomcat instances are pre-installed but disabled to conserve
+system resources. You will need to enable the desired Tomcat instance
+before running `installWdkSite` with the property file. For example, to
+enable the `ToxoDB` instance for a ToxoDB website,
+
+    sudo instance_manager enable ToxoDB
+
+Then install the website directories and Apache and Tomcat
+configurations,
+
+    installWdkSite *.prop
+
+You are now responsible for checking out website source code,
+configuring the application and building.
 
 If are using the Landrush plugin, you can edit the `config.landrush.tld`
 value in `Vagrantfile` to set a project vanity domains - allowing you,
