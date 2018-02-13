@@ -58,27 +58,14 @@ information not covered in this document.
 Vagrant Landrush Plugin (Optional)
 --------------------------------------
 
-The [Landrush](https://github.com/phinze/landrush) plugin for Vagrant
-provides a local DNS so you can register guest hostnames and refer to
-them in the host browser. It is not strictly required but it makes life
-easier than editing `/etc/hosts` files. This plugin has maximum benefit
-for OS X hosts, some benefit for Linux hosts and no benefit for Windows.
-Windows hosts will need to edit the `hosts` file.
+The [Landrush](https://github.com/vagrant-landrush/landrush) plugin for
+Vagrant provides a local DNS so you can register guest hostnames and
+refer to them in the host browser. It is not strictly required but it
+makes life easier than editing `/etc/hosts` files. This plugin has
+maximum benefit for OS X hosts, some benefit for Linux hosts and no
+benefit for Windows. Windows hosts will need to edit the `hosts` file.
 
-
-
-We use a custom fork of Landrush.  The gem file included with this
-project can be installed by running the following in an OS X terminal.
-
-    cd vagrant-webdev-poc
-    vagrant plugin install landrush-0.18.0.gem
-
-To manually build and install from source
-
-    git clone https://github.com/mheiges/landrush.git
-    cd landrush
-    rake build
-    vagrant plugin install pkg/landrush-0.18.0.gem
+    vagrant plugin install landrush
 
 _If you have trouble getting the host to resolve guest hostnames through
 landrush try clearing the host DNS cache by running_
@@ -171,10 +158,9 @@ and follow instructions. The hostname is preconfigured to be
 website with that hostname.
 
 If are using the Landrush plugin, you can edit the `config.landrush.tld`
-array in `Vagrantfile` to include project vanity domains - allowing you,
-for example, to have websites for sa.vm.toxodb.org and
-sa.vm.amoebadb.org. See '**About Apache VirtualHost Names**' below for
-more details on hostname.
+value in `Vagrantfile` to set a project vanity domains - allowing you,
+for example, to have a website for sa.vm.toxodb.org. See '**About Apache
+VirtualHost Names**' below for more details on hostname.
 
 Website Maintenance
 -------------------
