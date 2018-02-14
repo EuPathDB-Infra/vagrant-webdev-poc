@@ -1,15 +1,12 @@
 A Vagrant Demo For EBRC Website Development
 ===========================================
 
-This is an very incomplete starter project for EBRC website development.
+This is a starter Vagrant project for EBRC website development.
 Copy it, make it your own, commit it to your own repository.
 
 The Vagrant box has been provisioned using a subset of the same
 pipelines used to set up development webservers in the datacenter so it
-should have high parity with the traditional work environments.
-Nonetheless, treat this Vagrant project and box as a proof of concept
-and chance to identify features needed in our next generation VM
-templates.
+has high parity with the traditional work environments.
 
 Prerequisites
 =====
