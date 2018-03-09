@@ -178,8 +178,31 @@ Website Maintenance
 -------------------
 
 The virtual machine uses the same environment as physical servers so
-standard operating procedures apply. See summary list of tools at
-https://wiki.apidb.org/index.php/WebsiteMaintenanceScripts
+standard operating procedures apply.
+
+For a virtual environment, the most commonly used tools are:
+
+**rebuilder** - a system script to rebuild development websites. In its
+simplest form, just pass it the host name of the website you want to
+build.
+
+    rebuilder jane.toxodb.org
+
+Run `rebuilder -h` for additional help.
+
+**conifer** - for configuring the WDK and auxiliary components.
+
+See the [Quick Start Guide](https://cbilsvn.pmacs.upenn.edu/svn/gus/FgpUtil/trunk/Util/lib/conifer/docs/QuickstartGuide.md)
+for basic usage, and the 
+[User Manual](https://cbilsvn.pmacs.upenn.edu/svn/gus/FgpUtil/trunk/Util/lib/conifer/docs/UserManual.md)
+for more information.
+
+**cattail** - a convenience script that locates the Apache and Tomcat
+logs for a given website and runs `tail` on the Apache and Tomcat logs.
+
+    cattail jane.toxodb.org
+
+Run `cattail  -h` for additional help.
 
 ----
 
