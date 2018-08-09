@@ -1,4 +1,10 @@
 # XXX Be sure to add entries to /etc/hosts for each WDK site installed
+# E.g.,
+#  172.28.128.3 vm.ebrc.org
+#  172.28.128.3 plasmodb.vm.ebrc.org
+#  172.28.128.3 clinepidb.vm.ebrc.org
+#  172.28.128.3 fungidb.vm.ebrc.org
+#  172.28.128.3 microbiomedb.vm.ebrc.org
 
 sites = [
   [ 'ClinEpiDB', 8000 ],
@@ -18,6 +24,7 @@ Vagrant.configure(2) do |config|
 
   config.ssh.forward_agent = true
 
+  # plasmodb.vm.ebrc.org
   config.vm.hostname = 'vm.ebrc.org'
 
   config.vm.network 'private_network', type: 'dhcp'
