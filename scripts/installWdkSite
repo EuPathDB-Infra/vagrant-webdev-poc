@@ -13,7 +13,7 @@ source $propFile
 
 # basic installation
 sudo instance_manager enable $PRODUCT
-installWdkSite --non-interactive $propFile
+installWdkSite --non-interactive $propFile --ignore-ip
 
 # symlink to shared project_home
 baseGus="$WEB_BASE_DIR/$PRODUCT/$WEBAPP"

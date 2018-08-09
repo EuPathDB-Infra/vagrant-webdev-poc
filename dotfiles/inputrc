@@ -1,0 +1,8 @@
+set input-meta Off
+set convert-meta On
+set output-meta On
+
+set completion-ignore-case on
+
+Meta-p: history-search-backward
+Meta-n: history-search-forward

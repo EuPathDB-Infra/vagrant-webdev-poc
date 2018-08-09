@@ -1,0 +1,24 @@
+# skip the startup message
+startup_message off
+
+term "screen-256color"
+
+# Display a caption string below, appearing like tabs and
+# displaying the window number and application name (by default).
+caption always
+caption string "%{wk} %-w%{wr}%n %t%{-}%+w %-=%m-%d-%Y %0C [%H] "
+
+altscreen on
+#
+# j to move down a window, k to move up. Like teh VIM!
+# bind j focus down
+# bind k focus up
+#
+# Default screens
+# screen -t VIM
+# screen -t <a href="http://www.vertstudios.com/blog/stop-annoying-your-git-collaborators/">Git</a>
+# screen -t Console
+# screen -t Server
+#
+# Select first screen
+# select 0

@@ -2,3 +2,4 @@
 .vagrant
 scratch/*
 !.gitignore
+.eutaskrc*

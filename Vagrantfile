@@ -40,6 +40,9 @@ Vagrant.configure(2) do |config|
 
   config.vm.synced_folder '.', '/vagrant'
 
+  config.vm.provision 'shell', inline: "/bin/sh /vagrant/scripts/installYumPackages", privileged: true
+  config.vm.provision 'shell', inline: "/bin/sh /vagrant/scripts/installDotFiles", privileged: false
+
   sites.each { |product, port|
     config.vm.network "forwarded_port", guest: port, host: port
     config.vm.provision 'shell', inline: "/bin/sh /vagrant/scripts/installWdkSite #{product}", privileged: false

@@ -1,0 +1,2 @@
+source ${HOME}/.screenrc
+chdir ${BASE_GUS}
