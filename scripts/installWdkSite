@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+product="$1"
+propFile="/vagrant/wdkSiteProps/$1.prop"
+
+echo "Installing $product using the prop file $propFile."
+
+mkdir -p /home/vagrant/project_home
+# chown vagrant:vagrant /home/vagrant/project_home
+
+# read props to use below
+source $propFile
+
+# basic installation
+sudo instance_manager enable $PRODUCT
+installWdkSite --non-interactive $propFile
+
+# symlink to shared project_home
+baseGus="$WEB_BASE_DIR/$PRODUCT/$WEBAPP"
+rmdir $baseGus/project_home
+ln -s /home/vagrant/project_home $baseGus/project_home
+# chown -h vagrant:vagrant $baseGus/project_home

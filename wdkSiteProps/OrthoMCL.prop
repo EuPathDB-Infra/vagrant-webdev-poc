@@ -1,0 +1,10 @@
+PRODUCT=OrthoMCL
+HOST=orthomcl.vm.ebrc.org
+BASIC_AUTH_REQUIRED=true
+R_PROGRAM=/usr/bin/R
+WEBAPP=orthomcl.vm
+TOMCAT_INSTANCE=OrthoMCL
+TOMCAT_MAJOR_VERSION=6
+WEB_BASE_DIR=/var/www
+HTTPD_CONF_DIR=/etc/httpd/conf
+TOMCAT_INSTANCES_DIR=/usr/local/tomcat_instances

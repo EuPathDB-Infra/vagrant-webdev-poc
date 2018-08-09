@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+product="$1"
+port="$2"
+
+# add debugging capability
+echo CATALINA_OPTS['JPDA']="-agentlib:jdwp=transport=dt_socket,address=$port,server=y,suspend=n" >> /usr/local/tomcat_instances/$product/conf/instance.env
+instance_manager stop $product force
+instance_manager start $product
+firewall-cmd --permanent --add-rich-rule="rule port port=$port protocol='tcp' accept"
+sleep 10
+
+firewall-cmd --reload

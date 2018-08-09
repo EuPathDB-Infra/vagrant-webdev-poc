@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+echo Setting up npm
+npm set prefix ~/.local
+npm install -g typescript eslint eslint-plugin-react
+
+echo Copying dotfiles
+(
+  for file in `find /vagrant/dotfiles -type f`
+  do
+    base=$(basename $file)
+    cp $file ~/.$base
+  done
+)
+
+echo Setting up vim
+(
+  git clone https://github.com/dmfalke/dotvim.git ~/.vim
+  ~/.vim/scripts/init
+)
+
+exit 0
