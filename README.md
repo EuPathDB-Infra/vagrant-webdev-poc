@@ -8,27 +8,29 @@ The Vagrant box has been provisioned using a subset of the same
 pipelines used to set up development webservers in the datacenter so it
 has high parity with the traditional work environments.
 
-Prerequisites
-=====
 
+Prerequisites
+=============
 
 The vagrant box is downloaded from a restricted EuPathDB server. You
 will need to be on campus for the initial box download to be allowed
-through the server firewall. (Downloads happen the first time you run
-`vagrant up` or whenever you run `vagrant box update`). Once the box is
-cached on your host, you can work off-campus.
+through the server firewall. Alternatively, you can use
+[sshuttle](#run-sshuttle) to access the server. (Downloads happen the first
+time you run `vagrant up` or whenever you run `vagrant box update`). Once the
+box is cached on your host, you can work off-campus.
 
 
 Vagrant
 ---------------
 
-Vagrant manages the lifecycle of the virtual machine, following by the
+Vagrant manages the lifecycle of the virtual machine, by following the
 instructions in the `Vagrantfile` that is included with this project.
 
 [https://www.vagrantup.com/downloads.html](https://www.vagrantup.com/downloads.html)
 
 You should refer to Vagrant documentation and related online forums for
 information not covered in this document.
+
 
 VirtualBox
 ------------------
@@ -42,15 +44,6 @@ not compatible with this Vagrant project as it is currently configured.
 You should refer to VirtualBox documentation and related online forums
 for information not covered in this document.
 
-Ansible
----------------
-
-_Ansible is currently not required. This is a placeholder for future tasks of provisioning a specific website._
-
-[http://docs.ansible.com/ansible/intro_installation.html](http://docs.ansible.com/ansible/intro_installation.html)
-
-You should refer to Ansible documentation and related online forums for
-information not covered in this document.
 
 Vagrant Landrush Plugin (Optional)
 --------------------------------------
@@ -72,6 +65,11 @@ landrush try clearing the host DNS cache by running_
 You should refer to Landrush and Vagrant documentation and related
 online forums for information not covered in this document.
 
+If you decide to not use landrush, you can add entries to your host machines
+`/etc/hosts` file (this will be different on Windows). You will have to
+determine the external IP address of your vagrant guest (`ip addr show`).
+
+
 Usage
 =======
 
@@ -80,11 +78,38 @@ Obtain a Local Copy of This Vagrant Project
 
 Using either Git or Subversion,
 
-    git clone https://github.com/mheiges/vagrant-webdev-poc.git
+    git clone https://github.com/EuPathDB-Infra/vagrant-webdev-poc.git
 
 or
 
-    svn co https://github.com/mheiges/vagrant-webdev-poc.git vagrant-webdev-poc
+    svn co https://github.com/EuPathDB-Infra/vagrant-webdev-poc.git vagrant-webdev-poc
+
+
+Run sshuttle
+-----------------
+
+If you are off campus, you will need to tunnel through firewalls in order to
+download the vagrant box, and in order to access databases hosted on campus.
+Sshuttle is a useful utility for that. You can run it on your host if you have
+OS X or Linux, otherwise use the copy installed on the virtual machine.
+
+The `sshutle` on the virtual machine is managed from the command line.
+
+    sshuttle -e 'ssh -o StrictHostKeyChecking=no' -r joe@host.upenn.edu 10.12.33.0/24 10.11.60.0/24 > /dev/null 2>&1 &
+
+Substitute `joe@host.upenn.edu` with your username and your preferred
+tunnel endpoint. For best performance, pick an endpoint that is close to
+the database. The `10.12.33.0/24 10.11.60.0/24` specify which subnet
+destinations will be tunneled. Substitute these values with appropriate
+subnets for our datacenters.
+
+Adjust the command arguments as desired. This example squashes logging
+and puts the process into the background; change that if you need to see
+stderr/stdout for troubleshooting.
+
+See [sshuttle documentation](http://sshuttle.readthedocs.io/en/stable/)
+for details.
+
 
 Start the Virtual Machine
 -------------------------
@@ -92,12 +117,73 @@ Start the Virtual Machine
     cd vagrant-webdev-poc
     vagrant up
 
+The first time you run `vagrant up`, the vagrant box will be downloaded to your
+host machine. As mentioned earlier, this requires a campus internet connection
+or a tunnelled connection via `sshuttle` (see above).
+
+Vagrant will also run any provisioning scripts the first time `vagrant up` is
+run. These are declared in [Vagrantfile](Vagrantfile). The Vagrantfile in this
+repo includes provisioning scrips to set up a "nice" shell environment, vim
+plugins, and it will install and enable WDK websites. It will also set up port
+forwarding for associated Tomcat instances. See [this section of
+Vagrantfile](Vagrantfile#L9-L14) for details.
+
+_Note, SVN projects will not be checked out and websites will not be built. Read
+further to see how to do this._
+
+See https://www.vagrantup.com/docs/provisioning/index.html for more information
+about Vagrant provisioning.
+
+
 ssh to the Virtual Machine
 -----------------
 
 To connect to the VM as the `vagrant` user, run
 
     vagrant ssh
+
+
+Checkout SVN projects
+----------------
+
+Checkout SVN projects needed to build websites. This repo includes a script that
+will checkout projects for all websites we develop (genomic, clinepi,
+microbiome, and orthomcl).
+
+    cd $HOME/project_home
+    /vagrant/scripts/checkout-all.sh
+
+`$HOME/project_home` has been symlinked to the websites intalled in the
+provisioning script.
+
+
+Configure a website
+----------------
+
+As a part of the provisioning done with `vagrant up`, a shell function `sc` was
+include with the `.bashrc` script. `sc` will start a GNU screen session with the
+proper environment variables set to work with a particular website, and will put
+you in the base directory for the websites (aka, `$BASE_GUS`). You can use this
+to start working with a website.
+
+    sc plasmodb.vm.ebrc.org
+    conifer install plasmodb.vm.ebrc.org
+    conifer seed plasmodb.vm.ebrc.org
+    vi etc/conifer_site_vars.yaml # or use emacs, if you swing that way...
+    conifer install plasmodb.vm.ebrc.org
+
+
+Build a website
+-----------------
+
+Once you can configured a website, you are ready to build your site! Make sure
+you have tunneling enabled (with sshuttle, or otherwise).
+
+    rebuilder plasmodb.vm.ebrc.org
+
+
+Other Relevant Information
+=================
 
 Enable a Tomcat Instance
 -----------------
@@ -117,31 +203,6 @@ Likewise, shutdown and disable an instance you no longer need with
 `instance_manager`.
 
     sudo instance_manager disable AmoebaDB
-
-Run sshuttle
------------------
-
-If you are off campus and want access databases hosted on campus you
-will need to tunnel through firewalls. Sshuttle is a useful utility for
-that. You can run it on your host if you have OS X, otherwise use the
-copy installed on the virtual machine.
-
-The `sshutle` on the virtual machine is managed from the command line.
-
-    sshuttle -e 'ssh -o StrictHostKeyChecking=no' -r joe@host.upenn.edu 10.12.33.0/24 10.11.60.0/24 > /dev/null 2>&1 &
-
-Substitute `joe@host.upenn.edu` with your username and your preferred
-tunnel endpoint. For best performance, pick an endpoint that is close to
-the database. The `10.12.33.0/24 10.11.60.0/24` specify which subnet
-destinations will be tunneled. Substitute these values with appropriate
-subnets for our datacenters.
-
-Adjust the command arguments as desired. This example squashes logging
-and puts the process into the background; change that if you need to see
-stderr/stdout for troubleshooting.
-
-See [sshuttle documentation](http://sshuttle.readthedocs.io/en/stable/)
-for details.
 
 Install a Website
 -----------------
