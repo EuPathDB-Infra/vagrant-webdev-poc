@@ -354,6 +354,16 @@ To get around this, the following steps can be used:
    ```bash
    cd project_home/WDK/View && yarn && cd ../.. \
      && cd EbrcWebsiteCommon/Site && yarn && cd ../.. \
+     && cd {Website Project}/Site && yarn && cd ../../..
+   ```
+   Replace {Website Project} with the relevent project for your current site,
+   some options include "ApiCommonWebsite", "ClinEpiWebsite", and
+   "MicrobiomeWebsite".\
+    \
+   Example using ApiCommonWebsite:
+   ```bash
+   cd project_home/WDK/View && yarn && cd ../.. \
+     && cd EbrcWebsiteCommon/Site && yarn && cd ../.. \
      && cd ApiCommonWebsite/Site && yarn && cd ../../..
    ```
 4. Retry the build using the `rebuilder` command step above.
