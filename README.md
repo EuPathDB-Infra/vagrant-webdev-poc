@@ -295,10 +295,78 @@ live production website.
 Tips
 ------------
 
+### Editing project from host machine
+
 Put `$PROJECT_HOME` on an NFS share somehow so it can be edited with
 host IDE. (I manually make a `project_home` directory on
 `/vagrant/scratch` and symlink it in `/var/www/sa.vm.toxodb.org/`. There
 are many other options to explore.
+
+### Partial rebuild
+
+It will probably be necessary at some point for you to rebuild a part of a site
+for development purposes.  This can be accomplished without running the full
+5-15 minute build by following the relevant steps below.
+
+<!-- TODO: explain the bldw command use case -->
+
+#### Java Code Change
+
+If you have only made a change to Java code and need to rebuild a project the
+`bld {project}` command can be used to rebuild a specific project:
+
+1. Ensure desired code changes are available in the vm `project_home` directory.
+2. From the `/var/www/{SiteName}/{site.vm}` directory run the following command:
+   ```bash
+   bld {project}
+   ```
+   Example rebuilding the WDK/Model project using PlasmoDB:
+   ```bash
+   sc plasmodb.vm.ebrc.org
+   bld WDK/Model
+   ```
+3. Deploy the built changes:
+   ```bash
+   instance_manager manage {SiteName} reload {site.vm}
+   ```
+   Example using PlasmoDB:
+   ```bash
+   instance_manager manage PlasmoDB reload plasmo.vm
+   ```
+   This command will not show any output until it completes.
+
+Troubleshooting
+---------------
+
+### Yarn
+
+Occasionally, during the build step, the yarn command will fail.
+To get around this, the following steps can be used:
+
+1. Navigate to the `/var/www/{SiteName}/{name.vm}` directory.\
+   This is the working directory you will be in after running the `sc {site}` 
+   command described above.
+2. Ensure that yarn is installed:
+   ```bash
+   npm install -g yarn
+   ```
+3. Run the `yarn` command for the relevant projects:
+   ```bash
+   cd project_home/WDK/View && yarn && cd ../.. \
+     && cd EbrcWebsiteCommon/Site && yarn && cd ../.. \
+     && cd {Website Project}/Site && yarn && cd ../../..
+   ```
+   Replace {Website Project} with the relevent project for your current site,
+   some options include "ApiCommonWebsite", "ClinEpiWebsite", and
+   "MicrobiomeWebsite".\
+    \
+   Example using ApiCommonWebsite:
+   ```bash
+   cd project_home/WDK/View && yarn && cd ../.. \
+     && cd EbrcWebsiteCommon/Site && yarn && cd ../.. \
+     && cd ApiCommonWebsite/Site && yarn && cd ../../..
+   ```
+4. Retry the build using the `rebuilder` command step above.
 
 Known Issues
 ------------
